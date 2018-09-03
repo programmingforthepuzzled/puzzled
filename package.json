@@ -18,7 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile-sass": "node-sass ./src/styles/bulma/bulma-stripped.sass > ./src/styles/bulma/bulma-stripped.css",
     "concat-css": "concat -o ./docs/css/bundle.css ./src/styles/page/page.css ./src/styles/bulma/bulma-stripped.css",
-    "purge-css": "purgecss --css ./docs/css/bundle.css --out ./docs/css/ --content ./docs/puzzle_view.html ./docs/puzzle_selection.html --whitelist has-text-danger has-text-warning has-text-success",
+    "purge-css": "purgecss --css ./docs/css/bundle.css --out ./docs/css/ --content ./docs/puzzle_view.html ./docs/index.html --whitelist has-text-danger has-text-warning has-text-success",
     "min-css": "cleancss -o ./docs/css/bundle.min.css ./docs/css/bundle.css",
     "delete-intermediate-css": "rm ./docs/css/bundle.css ./src/styles/bulma/bulma-stripped.css",
     "build-css": "npm run compile-sass && npm run concat-css && npm run purge-css && npm run min-css && npm run delete-intermediate-css",
