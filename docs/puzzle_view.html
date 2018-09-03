@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="./css/bundle.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+    <style>
+        @keyframes spinner {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner:before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin-top: -10px;
+            margin-left: -10px;
+            border-radius: 50%;
+            border-top: 2px solid #ffff;
+            border-right: 2px solid transparent;
+            animation: spinner .6s linear infinite;
+        }
+
+        #vue-run-button {
+            width: 100px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background-color: #00D1B2;
+            border: 1px solid #00D1B2;
+            color: white;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body style="display:flex; flex-flow: row; position: relative;">
+
+    <div id="editor" style="flex: 1;"></div>
+    <div class="vertical-container" style="flex: 1;">
+        <div id="animation-container" class="half-container" style="overflow: hidden"></div>
+        <hr style="padding: 0; margin: 0;">
+        <div id="vue-app-message-display" class="half-container" style="overflow-y: auto">
+            <template v-for="(message, index) of messages">
+                <p class="has-text-weight-semibold is-size-4" v-bind:class="typeToClass(message.type)"> {{ message.text }}
+                </p>
+            </template>
+        </div>
+    </div>
+
+    <button id="vue-run-button" v-on:click="runUserCode()" class="center-button" v-bind:disabled="runningCode">Run</button>
+
+    <div id="vue-app-modal" class="modal" v-bind:class="{'is-active': active}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Tutorial</p>
+            </header>
+            <section class="modal-card-body">
+                <div class="content">
+
+                    <h1>Objective</h1>
+                    <p>{{ objective }}</p>
+
+                    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+                        <template v-for="image of images">
+                            <figure class="image is-48x48 is-marginless">
+                                <object class="svg-48x48" type="image/svg+xml" v-bind:data="image"></object>
+                            </figure>
+                        </template>
+
+                    </div>
+                    <h3>Rules</h3>
+                    <ul>
+                        <template v-for="rule of rules">
+                            <li>{{ rule }}</li>
+                        </template>
+
+                    </ul>
+                    <h3>Code</h3>
+                    <template v-for="codeDescription of code">
+                        <span v-html="codeDescription"></span>
+                        <p></p>
+                    </template>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" v-on:click="continueToPuzzle">Continue</button>
+                <button class="button is-danger" v-on:click="returnToMenu">Cancel</button>
+            </footer>
+        </div>
+    </div>
+</body>
+
+<!-- Libraries-->
+<script src="./lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.5/svg.js"></script>
+
+<!-- Page Code -->
+<script src="main.js"></script>
+
+</html>

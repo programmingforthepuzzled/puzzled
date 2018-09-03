@@ -1,0 +1,48 @@
+{
+  "name": "puzzled-js",
+  "version": "1.0.0",
+  "description": "Puzzled in Javascript",
+  "main": "main.js",
+  "scripts_comments": {
+    "compile-sass": "The CSS framework for this project, Bulma, is composed of many separate Sass files. This command converts bulma-stripped.sass, a file that imports only the necessary parts of Bulma for this project in order to save space, into bulma-stripped.css.",
+    "concat-css": "Concatenates the non-Bulma CSS (page.css) and Bulma's CSS (bulma-stripped.css) into one file.",
+    "purge-css": "Removes most CSS that is not used on the page. Certain CSS classes need to be whitelisted because they are added at runtime, so purge CSS cannot detect them in the project's HTML files.",
+    "min-css": "Minifies CSS by stripping whitespace, removing comments, etc.",
+    "delete-intermediate-css": "Deletes intermediate CSS files.",
+    "build-css": "Combines all of the above commands.",
+    "debug-build-css": "The same as the above command, but doesn't purge CSS because purge CSS can break page styling.",
+    "watch-js": "Continuously watches source .js/.ts files and compiles and bundles them into docs/main.js upon changes. I needed the --no-hmr flag to avoid this error: https://github.com/parcel-bundler/parcel/issues/856",
+    "build-js": "One time compilation and bundling of source files into docs/main.js. Performs optimizations, such as minification and comment stripping."
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile-sass": "node-sass ./src/styles/bulma/bulma-stripped.sass > ./src/styles/bulma/bulma-stripped.css",
+    "concat-css": "concat -o ./docs/css/bundle.css ./src/styles/page/page.css ./src/styles/bulma/bulma-stripped.css",
+    "purge-css": "purgecss --css ./docs/css/bundle.css --out ./docs/css/ --content ./docs/puzzle_view.html ./docs/puzzle_selection.html --whitelist has-text-danger has-text-warning has-text-success",
+    "min-css": "cleancss -o ./docs/css/bundle.min.css ./docs/css/bundle.css",
+    "delete-intermediate-css": "rm ./docs/css/bundle.css ./src/styles/bulma/bulma-stripped.css",
+    "build-css": "npm run compile-sass && npm run concat-css && npm run purge-css && npm run min-css && npm run delete-intermediate-css",
+    "debug-build-css": "npm run compile-sass && npm run concat-css && npm run min-css && npm run delete-intermediate-css",
+    "watch-js": "parcel ./src/scripts/main.js --no-hmr --out-dir ./docs",
+    "build-js": "parcel build ./src/scripts/main.js --out-dir ./docs "
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-css-cli": "^4.1.11",
+    "concat": "^1.0.3",
+    "node-sass": "^4.9.2",
+    "parcel-bundler": "^1.9.7",
+    "purgecss": "^1.0.1",
+    "regenerator-runtime": "^0.12.1",
+    "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "comm": "^0.2.0",
+    "ladda": "^2.0.1"
+  },
+  "browserslist_comments": {
+    "last 1 Chrome version": "Chrome 67 as of 10/8/18",
+    "meta": "There is no browserslist right now - there was, at one point"
+  }
+}

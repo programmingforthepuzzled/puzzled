@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/bundle.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="width: 100%;">
+
+    <section class="hero is-primary" style="height: 18%">
+        <div class="hero-body">
+            <div class="container">
+                <p class="title">
+                    Puzzled!
+                </p>
+                <p class="subtitle">
+                    Solve 5 different puzzles in Javascript
+                </p>
+            </div>
+        </div>
+    </section>
+    <div class="tile is-ancestor" style="margin: 0; height: 82%; width: 100%; display: flex; justify-content: center">
+        <div class="tile is-5 is-vertical is-parent">
+            <div class="tile is-child notification is-info">
+                <p class="title">Wolves and Goats</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-around; overflow: hidden;">
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/goat-apple-wolf/apple.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/goat-apple-wolf/wolf.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/goat-apple-wolf/goat.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/goat-apple-wolf/farmer.svg"></object>
+                    </figure>
+                </div>
+            </div>
+            <div class="tile is-child notification is-success">
+                <p class="title">Husbands and Wives</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-around; overflow: hidden;">
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/husband-wife/Bob.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/husband-wife/Bob_Wife.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/husband-wife/Charlie.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/husband-wife/Charlie_Wife.svg"></object>
+                    </figure>
+                </div>
+            </div>
+            <div class="tile is-child notification is-info">
+                <p class="title">Soldiers and Boys</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-around;">
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/soldier-boy/boy.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/soldier-boy/soldier.svg"></object>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-5 is-vertical is-parent">
+            <div class="tile is-child notification is-success" style="display: flex; flex-direction: column; justify-content:flex-start">
+                <p class="title">Priests and Vampires</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-around; flex: 1; align-items: center">
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/vampire-priest/priest.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/vampire-priest/vampire.svg"></object>
+                    </figure>
+                </div>
+            </div>
+            <div class="tile is-child notification is-info" style="display: flex; flex-direction: column; justify-content:flex-start">
+                <p class="title">Ghouls and Adventurers</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-around; flex: 1; align-items: center; overflow: hidden;">
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Alice.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Bob.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Charlie.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Doris.svg"></object>
+                    </figure>
+                    <figure class="image is-96x96 is-marginless">
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/ghost.svg"></object>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var tiles = document.querySelectorAll('div.tile.is-child.notification');
+    for (var i = tiles.length; i--;) {
+        (function () {
+            var tile = tiles[i]
+            tile.addEventListener("click", function () {
+                sessionStorage.setItem('puzzleID', tile.children[0].textContent);
+                window.location.href = './puzzle_view.html'
+            })
+        })()
+    }
+</script>
+
+</html>
