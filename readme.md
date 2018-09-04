@@ -1,19 +1,6 @@
-# Puzzled  JS
-
-Puzzled in Javascript
-
-## Usage
-To test it out - 
-Download the dist folder and open index.html. The entire release version is self contained under the dist folder. 
-The project should work on any recent version of Chrome or Microsoft Edge.
-
-Notes - 
-currently there is only one working puzzle. Click the "1" tab at the top of the screen to access it. 
-main menu coming soon... 
-
-### Development
-
-Coming soon...
-
-
+# Programming for the Puzzled
+Source for the website: https://programmingforthepuzzled.github.io/puzzled/
+## Offline Usage
+Download the repository and extract the "docs" folder. Open "index.html".
+The website should work on any recent version of Chrome, Firefox, or Edge. It theoretically should also work in other browsers, such as Safari/Opera, but that hasn't been tested due to lack of access to the aforementioned browsers. 
 
