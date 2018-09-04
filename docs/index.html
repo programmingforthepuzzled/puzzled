@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./css/bundle.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .imageRow {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body style="width: 100%;">
@@ -26,7 +34,7 @@
         <div class="tile is-5 is-vertical is-parent">
             <div class="tile is-child notification is-info">
                 <p class="title">Wolves and Goats</p>
-                <div style="display: flex; flex-direction: row; justify-content: space-around; overflow: hidden;">
+                <div class="imageRow">
                     <figure class="image is-96x96 is-marginless">
                         <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/goat-apple-wolf/apple.svg"></object>
                     </figure>
@@ -43,7 +51,7 @@
             </div>
             <div class="tile is-child notification is-success">
                 <p class="title">Husbands and Wives</p>
-                <div style="display: flex; flex-direction: row; justify-content: space-around; overflow: hidden;">
+                <div class="imageRow">
                     <figure class="image is-96x96 is-marginless">
                         <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/husband-wife/Bob.svg"></object>
                     </figure>
@@ -60,7 +68,7 @@
             </div>
             <div class="tile is-child notification is-info">
                 <p class="title">Soldiers and Boys</p>
-                <div style="display: flex; flex-direction: row; justify-content: space-around;">
+                <div class="imageRow">
                     <figure class="image is-96x96 is-marginless">
                         <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/soldier-boy/boy.svg"></object>
                     </figure>
@@ -73,7 +81,7 @@
         <div class="tile is-5 is-vertical is-parent">
             <div class="tile is-child notification is-success" style="display: flex; flex-direction: column; justify-content:flex-start">
                 <p class="title">Priests and Vampires</p>
-                <div style="display: flex; flex-direction: row; justify-content: space-around; flex: 1; align-items: center">
+                <div class="imageRow" style="flex: 1; align-items: center">
                     <figure class="image is-96x96 is-marginless">
                         <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/vampire-priest/priest.svg"></object>
                     </figure>
@@ -84,7 +92,7 @@
             </div>
             <div class="tile is-child notification is-info" style="display: flex; flex-direction: column; justify-content:flex-start">
                 <p class="title">Ghouls and Adventurers</p>
-                <div style="display: flex; flex-direction: row; justify-content: space-around; flex: 1; align-items: center; overflow: hidden;">
+                <div class="imageRow" style="flex: 1; align-items: center">
                     <figure class="image is-96x96 is-marginless">
                         <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Alice.svg"></object>
                     </figure>
@@ -107,15 +115,25 @@
 </body>
 
 <script>
+    /*
+    Ugly code is needed for setting on click listeners in nested for loops
+    */
     var tiles = document.querySelectorAll('div.tile.is-child.notification');
     for (var i = tiles.length; i--;) {
         (function () {
-            var tile = tiles[i]
+            var tile = tiles[i];
+            tile.style.cursor = "pointer"
             tile.addEventListener("click", function () {
                 sessionStorage.setItem('puzzleID', tile.children[0].textContent);
-                window.location.href = './puzzle_view.html'
-            })
-        })()
+                window.location.href = './puzzle_view.html';
+            });
+            //This for loops sets a style on all <object> tags
+            //so they can be clicked
+            for (var _i = 0, _a = tile.querySelectorAll('object'); _i < _a.length; _i++) {
+                var object = _a[_i];
+                object.style.pointerEvents = "none";
+            }
+        })();
     }
 </script>
 

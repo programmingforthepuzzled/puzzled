@@ -104,6 +104,8 @@ class RiverSetup extends StandardSetup {
 
 let goatCabbageWolfDir = "goat-apple-wolf/";
 
+
+
 export const goatCabbageWolf = new RiverSetup(
     () => {
         let [goat, apple, wolf, farmer] = initGoatPuzzle();
@@ -142,7 +144,7 @@ export const soldierBoy = new RiverSetup(
     soldierBoyDir,
     new TutorialData("Get the soldiers and boys to the other side of the river using the boat.", ["soldier.svg", "boy.svg"], ["soldier", "boy"], ["The boat can carry 2 boys, a solder and a boy, but not 2 soldiers."],
         ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>Soldiers</code>, <code>Boys</code><br>\n<strong>Number of Inputs:</strong>  0 to 8<br>\n<strong>Description:</strong> Moves soldiers and boys across the river."]),
-    "//Moves the first soldier and second boy across the river\nmoveBoat(soldiers[0], boys[1])"
+    "//Move the first soldier and second boy across the river\nmoveBoat(soldiers[0], boys[1])\n\n//This is a for loop - it is used for repeating an action\n//Move the first soldier across the river 3 times\nfor(var i = 0; i < 3; i++) {\n    moveBoat(soldiers[0])\n}"
 );
 
 let husbandWifeDir = "husband-wife/";
