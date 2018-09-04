@@ -199,8 +199,9 @@ export class RiverAnimator implements Animator {
 
 	displayFatalError(message: string, errorData: RiverErrorData, passengers: ReadonlyArray<Passenger>) {
 
-		this.replaceImage(errorData.oldType, errorData.newType, errorData.side, passengers)
-
+		if (!states[0].data.passengers.find(passenger => ["Bob_Wife", "Charlie_Wife", "Bob", "Charlie"].includes(passenger.type))) {
+			this.replaceImage(errorData.oldType, errorData.newType, errorData.side, passengers)
+		}
 		//let imageWidth = rightBankXCoord - riverBankWidth;
 
 		//If custom error images are needed then put images in the path represented by "baseDir + commonDir"

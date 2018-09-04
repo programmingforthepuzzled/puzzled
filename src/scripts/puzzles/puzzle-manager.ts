@@ -155,7 +155,7 @@ export const husbandWife = new RiverSetup(
         Object.assign(husbandWife.__environment__, { Bob, Bob_Wife, Charlie, Charlie_Wife })
     },
     husbandWifeDir,
-    new TutorialData("Get the husbands and wives to the other side of the river using the boat.",
+    new TutorialData("Get the jealous husbands and wives to the other side of the river using the boat.",
         ["Bob.svg", "Bob_Wife.svg", "Charlie.svg", "Charlie_Wife.svg"],
         ["Bob", "Bob_Wife", "Charlie", "Charlie_Wife"],
         ["Charlie cannot be left alone with Bob's wife.",

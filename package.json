@@ -26,7 +26,7 @@
     "watch-js": "parcel ./src/scripts/main.js --no-hmr --out-dir ./docs",
     "build-js": "parcel build ./src/scripts/main.js --out-dir ./docs "
   },
-  "author": "",
+  "author": "Vedant Roy",
   "license": "ISC",
   "devDependencies": {
     "clean-css-cli": "^4.1.11",
@@ -37,10 +37,7 @@
     "regenerator-runtime": "^0.12.1",
     "typescript": "^3.0.1"
   },
-  "dependencies": {
-    "comm": "^0.2.0",
-    "ladda": "^2.0.1"
-  },
+  "dependencies": {},
   "browserslist_comments": {
     "last 1 Chrome version": "Chrome 67 as of 10/8/18",
     "meta": "There is no browserslist right now - there was, at one point"
