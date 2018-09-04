@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="./accessible-css/normalize.css">
-    <link rel="stylesheet" href="./accessible-css/sakura.css">
+    <link rel="stylesheet" href="./css/accessible/normalize.css">
+    <link rel="stylesheet" href="./css/accessible/sakura.css">
 
     <!-- Override Sakura.css buttons-->
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             overflow: hidden;
         }
@@ -18,13 +20,14 @@
             flex-flow: column;
         }
 
-        /* Not supported on IE 11 - inline in production */ 
+        /* Not supported on IE 11 - inline in production */
         :root {
-            --button-color: #4CAF50; /* Green */
+            --button-color: #4CAF50;
+            /* Green */
         }
 
         button {
-            background-color: var(--button-color); 
+            background-color: var(--button-color);
             border: none;
             color: white;
             padding: 15px 32px;
@@ -33,9 +36,9 @@
             font-size: 16px;
             transition-duration: 0.2s;
         }
-        
+
         button:hover {
-            background-color: #ffffff; 
+            background-color: #ffffff;
             border: 2px solid var(--button-color);
             color: var(--button-color);
         }
@@ -52,29 +55,30 @@
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
+</head>
+
 <body style="width: 100%;">
 
-<header>
-    <h1>Puzzled!</h1>
-    <h3>Solve 5 different puzzles in Javascript</h3>
-</header>
+    <header>
+        <h1>Puzzled!</h1>
+        <h3>Solve 5 different puzzles in Javascript</h3>
+    </header>
 
 
-<div class="vertical-group fill-vertical">
-        <button>Animals and Vegetables</button>
+    <div class="vertical-group fill-vertical">
+        <button>Wolves and Goats</button>
         <button>Husbands and Wives</button>
         <button>Soldiers and Boys</button>
         <button>Priests and Vampires</button>
-        <button>Ghouls and Adventurers</button>        
-</div>
+        <button>Ghouls and Adventurers</button>
+    </div>
 
 </body>
 
 <script>
     var buttons = document.querySelectorAll('button');
     for (var i = buttons.length; i--;) {
-        (function() {
+        (function () {
             var button = buttons[i]
             button.addEventListener('click', function () {
                 sessionStorage.setItem('puzzleID', button.innerHTML);

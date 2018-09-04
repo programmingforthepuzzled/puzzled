@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Vue.js -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="./lib/vue/vue.js"></script>
 
     <style>
         @keyframes spinner {
@@ -61,7 +61,8 @@
         </div>
     </div>
 
-    <button id="vue-run-button" v-on:click="runUserCode()" class="center-button" v-bind:disabled="runningCode">Run</button>
+    <button id="vue-run-button" v-on:click="runUserCode()" class="center-button" v-bind:class="{spinner: runningCode}" v-bind:disabled="runningCode">{{
+        text }}</button>
 
     <div id="vue-app-modal" class="modal" v-bind:class="{'is-active': active}">
         <div class="modal-background"></div>
@@ -76,12 +77,14 @@
                     <p>{{ objective }}</p>
 
                     <div style="display: flex; flex-direction: row; justify-content: space-around;">
-                        <template v-for="image of images">
-                            <figure class="image is-48x48 is-marginless">
-                                <object class="svg-48x48" type="image/svg+xml" v-bind:data="image"></object>
-                            </figure>
+                        <template v-for="(image, index) of images">
+                            <div style="display: flex; flex-direction: column;">
+                                <figure class="image is-48x48 is-marginless">
+                                    <object class="svg-48x48" type="image/svg+xml" v-bind:data="image"></object>
+                                </figure>
+                                <p>{{ imageCaptions[index] }}</p>
+                            </div>
                         </template>
-
                     </div>
                     <h3>Rules</h3>
                     <ul>
@@ -91,9 +94,9 @@
 
                     </ul>
                     <h3>Code</h3>
-                    <template v-for="codeDescription of code">
-                        <span v-html="codeDescription"></span>
-                        <p></p>
+                    <template v-for="(codeDescription, index) of code">
+                        <p v-html="codeDescription"></p>
+                        <hr v-if="index < code.length - 1">
                     </template>
                 </div>
             </section>
@@ -107,7 +110,7 @@
 
 <!-- Libraries-->
 <script src="./lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.5/svg.js"></script>
+<script src="./lib/svg/svg.js"></script>
 
 <!-- Page Code -->
 <script src="main.js"></script>

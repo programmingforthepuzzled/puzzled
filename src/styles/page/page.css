@@ -3,7 +3,7 @@
 html,
 body {
     height: 100%;
-    overflow: auto
+    overflow-y: visible
 }
 
 /* Styling for puzzle_view.html */

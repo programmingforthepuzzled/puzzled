@@ -10,36 +10,22 @@ editor.setShowPrintMargin(false);
 editor.getSession().setUseWrapMode(true);
 editor.setFontSize(20)
 
-import { goatCabbageWolf, vampirePriest, soldierBoy, husbandWife, ghoul } from "./puzzles/puzzle-manager";
-
-let puzzles = new Map();
-puzzles.set("Animals and Vegetables", goatCabbageWolf);
-puzzles.set("Priests and Vampires", vampirePriest);
-puzzles.set("Soldiers and Boys", soldierBoy);
-puzzles.set("Husbands and Wives", husbandWife);
-puzzles.set("Ghouls and Adventurers", ghoul)
-
-//set current puzzle
-let currentPuzzle = puzzles.get(sessionStorage.getItem('puzzleID'));
-
-//Setup Modal Controller
-let modalController = require('./ui/modal-controller');
-modalController.initModal(currentPuzzle.tutorialData);
-
-
+const runButtonID = "vue-run-button"
 let runButtonVueManager = new Vue({
-    el: "#vue-run-button",
+    el: "#" + runButtonID,
     data: {
         runningCode: false,
+        text: "Run"
     },
     methods: {
         runUserCode: async function () {
+            this.startRunning()
             this.runningCode = true
 
             for (let annotation of editor.getSession().getAnnotations()) {
                 if (annotation.type === 'warning' || annotation.type === 'error') {
                     codeErrorAlert()
-                    this.runningCode = false
+                    this.stopRunning()
                     return;
                 }
             }
@@ -54,13 +40,41 @@ let runButtonVueManager = new Vue({
                 await currentPuzzle.endCode(error)
             }
 
+            this.stopRunning()
+        },
+        startRunning: function () {
+            this.text = " "
+            this.runningCode = true
+        },
+        stopRunning: function () {
             this.runningCode = false
+            this.text = "Run"
         }
     }
 })
 
-runButtonVueManager.runUserCode()
+import { goatCabbageWolf, vampirePriest, soldierBoy, husbandWife, ghoul } from "./puzzles/puzzle-manager";
 
+let puzzles = new Map();
+puzzles.set("Wolves and Goats", goatCabbageWolf);
+puzzles.set("Priests and Vampires", vampirePriest);
+puzzles.set("Soldiers and Boys", soldierBoy);
+puzzles.set("Husbands and Wives", husbandWife);
+puzzles.set("Ghouls and Adventurers", ghoul)
+
+//set current puzzle
+let currentPuzzle = puzzles.get(sessionStorage.getItem('puzzleID'));
+
+//Setup Modal Controller
+let modalController = require('./ui/modal-controller');
+modalController.initModal(currentPuzzle.tutorialData);
+
+runButtonVueManager.runUserCode()
+//Freeze button's height so it doesn't shrink when code is running
+const runButton = document.getElementById(runButtonID)
+runButton.style.height = (runButton.clientHeight + 4) + "px"
+//console.log(document.getElementById('vue-run-button').clientHeight)
+editor.setValue(currentPuzzle.initialCode)
 
 
 

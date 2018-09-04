@@ -1,5 +1,5 @@
 import { Animator, createDraw } from "../base-animator";
-import { getBaseDimensions, sleep, sortIntoLeftAndRightSides, getMovingCrossers, getCenterY } from "./common-animator";
+import { getBaseDimensions, sleep, sortIntoLeftAndRightSides, getMovingCrossers } from "./common-animator";
 import { Side } from './common-setup'
 import { SeverityLevel } from '../base-puzzle-setup'
 import { states, GhoulState, GhoulStatus } from './bridge-setup'
@@ -122,8 +122,6 @@ export class BridgeAnimator implements Animator {
 
 	private displayFatalError(message: string) {
 
-		//If custom error images are needed then put images in the path represented by "baseDir + commonDir"
-		//and go to river-puzzle-setup.ts and change the error codes to the names of the images
 		let ghostSideLen = this.characterSideLength * 3;
 		this.draw.image(this.specificDir + 'ghost' + this.fileExtension).size(ghostSideLen, ghostSideLen).move(this.baseWidth / 2 - ghostSideLen / 2, this.bridgeYCoord - ghostSideLen - ghostSideLen / 2);
 
@@ -144,7 +142,7 @@ export class BridgeAnimator implements Animator {
 	}
 
 	private moveTorch(image: svgjs.Image) {
-		this.torch.move(image!.x() + this.characterSideLength / 4, this.bridgeYCoord - this.characterSideLength - this.torchHeight)
+		this.torch.move(image.x() + this.characterSideLength / 4, this.bridgeYCoord - this.characterSideLength - this.torchHeight)
 	}
 
 	private async animateCrossing(IDs: ReadonlyArray<number>, moveDirection: Side | null, state: GhoulState) {

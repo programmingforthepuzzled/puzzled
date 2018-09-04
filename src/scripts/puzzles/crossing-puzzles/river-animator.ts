@@ -1,3 +1,5 @@
+//The code in this file isn't great because it was my first attempt at creating an animator - look to the "bridge-animator.ts"
+//for an example of better code
 import { SeverityLevel } from '../base-puzzle-setup'
 import { Animator, createDraw } from '../base-animator'
 import { states, RiverState, RiverStatuses, Passenger, RiverErrorData } from './river-setup'
@@ -30,7 +32,6 @@ const drawings = new Map<number, svgjs.Image>();
 
 let boat: svgjs.Image
 let boatSideLength: number
-let boatSideLengthInCharacters = 2;
 let boatYCoord: number
 
 let maxCharactersInColumn = 4;
@@ -99,6 +100,7 @@ export class RiverAnimator implements Animator {
 	}
 
 	initBoat() {
+		const boatSideLengthInCharacters = 2;
 		boatSideLength = (characterSideLength * boatSideLengthInCharacters) + gap;
 		boatYCoord = getCenterY(boatSideLength, baseHeight);
 
@@ -136,8 +138,8 @@ export class RiverAnimator implements Animator {
 
 		//Check if it's the first state because the first state doesn't require animation
 		if (i === 0) {
-			drawRiverBank(leftBankXCoord, leftBankIDs);
-			drawRiverBank(rightBankXCoord, rightBankIDs);
+			this.drawRiverBank(leftBankXCoord, leftBankIDs);
+			this.drawRiverBank(rightBankXCoord, rightBankIDs);
 		} else {
 
 			let showSuccess = false;
@@ -156,9 +158,9 @@ export class RiverAnimator implements Animator {
 			//Redraw the canvas in the direction of the movement - if the movement was from right to left ('left')
 			//then redraw the right side first
 			if (moveDirection === 'left') {
-				drawRiverBank(rightBankXCoord, rightBankIDs)
+				this.drawRiverBank(rightBankXCoord, rightBankIDs)
 			} else {
-				drawRiverBank(leftBankXCoord, leftBankIDs)
+				this.drawRiverBank(leftBankXCoord, leftBankIDs)
 			}
 
 
@@ -181,9 +183,9 @@ export class RiverAnimator implements Animator {
 			await this.animateCrossing(movingPassengerIDs, moveDirection);
 
 			if (moveDirection === Side.Left) {
-				drawRiverBank(leftBankXCoord, leftBankIDs)
+				this.drawRiverBank(leftBankXCoord, leftBankIDs)
 			} else {
-				drawRiverBank(rightBankXCoord, rightBankIDs)
+				this.drawRiverBank(rightBankXCoord, rightBankIDs)
 			}
 
 			if (throwFatalError) {
@@ -211,6 +213,7 @@ export class RiverAnimator implements Animator {
 	replaceImage(oldtype: string, newtype: string, targetSide: Side, passengers: ReadonlyArray<Passenger>) {
 
 		drawings.forEach((drawing, key) => {
+			//@ts-ignore drawing.src undefined
 			let src: string = drawing.src
 			if (src) {
 				if (passengers[key].side === targetSide) {
@@ -218,7 +221,13 @@ export class RiverAnimator implements Animator {
 						let oldX = drawing.x()
 						let oldY = drawing.y()
 						drawing.remove()
-						drawing = this.draw.image(drawing.src.replace(oldtype + extension, newtype + extension)).size(characterSideLength, characterSideLength).move(oldX, oldY)
+						if (oldtype === 'apple') {
+							//@ts-ignore drawing.src undefined
+							drawing = this.draw.image(drawing.src.replace(oldtype + extension, newtype + extension)).size(characterSideLength, characterSideLength).move(oldX, oldY)
+						} else {
+							//@ts-ignore drawing.src undefined
+							drawing = this.draw.image(drawing.src.replace(drawing.src.split('/').slice(-2).join('/'), 'common/' + newtype + extension)).size(characterSideLength, characterSideLength).move(oldX, oldY)
+						}
 					}
 				}
 			}
@@ -362,33 +371,35 @@ export class RiverAnimator implements Animator {
 
 	}
 
-
-}
-
-function drawRiverBank(xCoord: number, IDs: ReadonlyArray<number>) {
+	drawRiverBank(xCoord: number, IDs: ReadonlyArray<number>) {
 
 
-	let totalCharactersDrawn = 0;
-	let currentXCoord = xCoord;
+		let totalCharactersDrawn = 0;
+		let currentXCoord = xCoord;
 
-	columnLoop: for (let currentColumn = 0; currentColumn < maxColumns; currentColumn++) {
+		columnLoop: for (let currentColumn = 0; currentColumn < maxColumns; currentColumn++) {
 
-		let currentYCoord = 0;
+			let currentYCoord = 0;
 
-		for (let currentRow = 0; currentRow < maxCharactersInColumn; currentRow++) {
-			if (totalCharactersDrawn === IDs.length) {
-				break columnLoop;
+			for (let currentRow = 0; currentRow < maxCharactersInColumn; currentRow++) {
+				if (totalCharactersDrawn === IDs.length) {
+					break columnLoop;
+				}
+
+				drawings.get(IDs[totalCharactersDrawn])!.move(currentXCoord, currentYCoord);
+
+				currentYCoord += (characterSideLength + gap);
+				totalCharactersDrawn++;
 			}
-
-			drawings.get(IDs[totalCharactersDrawn])!.move(currentXCoord, currentYCoord);
-
-			currentYCoord += (characterSideLength + gap);
-			totalCharactersDrawn++;
+			currentXCoord += characterSideLength;
 		}
-		currentXCoord += characterSideLength;
+
 	}
 
+
 }
+
+
 
 
 
