@@ -119,7 +119,7 @@ export const goatCabbageWolf = new RiverSetup(
             "The goat cannot be left alone with the apple.",
             "Only the farmer can row the boat.",
             "The boat can hold up to 2 objects."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>Goat</code>, <code>Wolf</code>, <code>Farmer</code>, <code>Apple</code><br>\n<strong>Number of Inputs:</strong> 1 to 4<br>\n<strong>Description</strong>: Moves its inputs across the river on the boat."]),
+        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>goat</code>, <code>wolf</code>, <code>farmer</code>, <code>apple</code><br>\n<strong>Number of Inputs:</strong> 1 to 4<br>\n<strong>Description</strong>: Moves its inputs across the river on the boat."]),
     "//Moves the farmer and apple across the river\nmoveBoat(farmer, apple)");
 
 let vampirePriestDir = "vampire-priest/";
@@ -131,7 +131,7 @@ export const vampirePriest = new RiverSetup(
     },
     vampirePriestDir,
     new TutorialData("Get the priests and vampires to the other side of the river using the boat.", ["priest.svg", "vampire.svg"], ["priest", "vampire"], ["The boat can hold a maximum of 2 people.", "The number of vampires cannot exceed the number of priests on either side of the river."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>Vampires</code>, <code>Priests</code><br>\n<strong>Number of Inputs:</strong>  0 to 6<br>\n<strong>Description:</strong> Moves vampires and priests across the river."]),
+        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>vampires</code>, <code>priests</code><br>\n<strong>Number of Inputs:</strong>  0 to 6<br>\n<strong>Description:</strong> Moves vampires and priests across the river."]),
     "//Moves the first vampire and second priest across the river\nmoveBoat(vampires[0], priests[1])");
 
 let soldierBoyDir = "soldier-boy/";
@@ -143,7 +143,7 @@ export const soldierBoy = new RiverSetup(
     },
     soldierBoyDir,
     new TutorialData("Get the soldiers and boys to the other side of the river using the boat.", ["soldier.svg", "boy.svg"], ["soldier", "boy"], ["The boat can carry 2 boys, a solder and a boy, but not 2 soldiers."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>Soldiers</code>, <code>Boys</code><br>\n<strong>Number of Inputs:</strong>  0 to 8<br>\n<strong>Description:</strong> Moves soldiers and boys across the river."]),
+        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>soldiers</code>, <code>boys</code><br>\n<strong>Number of Inputs:</strong>  0 to 8<br>\n<strong>Description:</strong> Moves soldiers and boys across the river."]),
     "//Move the first soldier and second boy across the river\nmoveBoat(soldiers[0], boys[1])\n\n//This is a for loop - it is used for repeating an action\n//Move the first soldier across the river 3 times\nfor(var i = 0; i < 3; i++) {\n    moveBoat(soldiers[0])\n}"
 );
 
