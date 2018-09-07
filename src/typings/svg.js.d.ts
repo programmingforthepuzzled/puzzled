@@ -659,7 +659,7 @@ declare namespace svgjs {
         new (point: Point): Point;
         new (position: { x: number, y: number }): Point;
         new (x: number, y: number): Point;
-        
+
         x: number;
         y: number;
 

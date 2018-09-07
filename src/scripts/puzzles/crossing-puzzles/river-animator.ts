@@ -199,15 +199,10 @@ export class RiverAnimator implements Animator {
 
 	displayFatalError(message: string, errorData: RiverErrorData, passengers: ReadonlyArray<Passenger>) {
 
+		//Don't want skull in wife puzzle
 		if (!states[0].data.passengers.find(passenger => ["Bob_Wife", "Charlie_Wife", "Bob", "Charlie"].includes(passenger.type))) {
 			this.replaceImage(errorData.oldType, errorData.newType, errorData.side, passengers)
 		}
-		//let imageWidth = rightBankXCoord - riverBankWidth;
-
-		//If custom error images are needed then put images in the path represented by "baseDir + commonDir"
-		//and go to river-puzzle-setup.ts and change the error codes to the names of the images
-		//this.draw.image(this.baseDir + this.commonDir + 'worried.svg').size(imageWidth, baseHeight).move(characterSideLength * maxColumns, 0);
-
 		this.addMessage("Error: " + message)
 	}
 
