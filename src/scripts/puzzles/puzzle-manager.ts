@@ -119,7 +119,7 @@ export const goatCabbageWolf = new RiverSetup(
             "The goat cannot be left alone with the apple.",
             "Only the farmer can row the boat.",
             "The boat can hold up to 2 objects."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>goat</code>, <code>wolf</code>, <code>farmer</code>, <code>apple</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves its inputs across the river on the boat."]),
+        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>goat</code>, <code>wolf</code>, <code>farmer</code>, <code>apple</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves objects across the river on the boat."]),
     "//Moves the farmer and apple across the river\nmoveBoat(farmer, apple)");
 
 let vampirePriestDir = "vampire-priest/";
@@ -177,7 +177,7 @@ export const ghoul = new BridgeSetup(
         ["Alice.svg", "Bob.svg", "Charlie.svg", "Doris.svg"],
         ["Alice", "Bob", "Charlie", "Doris"],
         ["Alice, Bob, Charlie, and Doris can cross the bridge in 1, 2, 5, and 10 minutes respectively", "All 4 adventurers must cross the bridge in 17 minutes or less, otherwise a ghoul appears", "The bridge can only bear the weight of 2 people at a time", "Crossing the bridge is impossible without the torch"],
-        ["<strong>Function:</strong> <code>crossBridge</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves its inputs across the bridge.", "<strong>Function:</strong> <code>giveTorch</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1<br>\n<strong>Description</strong>: Moves its inputs across the bridge."]),
+        ["<strong>Function:</strong> <code>crossBridge</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves adventurers across the bridge.", "<strong>Function:</strong> <code>giveTorch</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1<br>\n<strong>Description</strong>: Gives the torch to an adventurer."]),
     "//Moves Alice and Doris across the Bridge\ncrossBridge(Alice, Doris)\n//Gives torch to Doris\ngiveTorch(Doris)"
 )
 
