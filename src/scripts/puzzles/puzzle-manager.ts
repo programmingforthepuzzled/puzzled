@@ -130,7 +130,7 @@ export const vampirePriest = new RiverSetup(
         Object.assign(vampirePriest.__environment__, { vampires, priests })
     },
     vampirePriestDir,
-    new TutorialData("Get the priests and vampires to the other side of the river using the boat.", ["priest.svg", "vampire.svg"], ["priest", "vampire"], ["The boat can hold a maximum of 2 people.", "The number of vampires cannot exceed the number of priests on either side of the river.", "Anyone can row the boat."],
+    new TutorialData("Get three priests and three vampires to the other side of the river using the boat.", ["priest.svg", "vampire.svg"], ["priest", "vampire"], ["The boat can hold a maximum of 2 people.", "The number of vampires cannot exceed the number of priests on either side of the river.", "Anyone can row the boat."],
         ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>vampires</code>, <code>priests</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description:</strong> Moves vampires and priests across the river."]),
     "//Moves the first vampire and second priest across the river\nmoveBoat(vampires[0], priests[1])");
 
@@ -142,7 +142,7 @@ export const soldierBoy = new RiverSetup(
         Object.assign(soldierBoy.__environment__, { soldiers, boys })
     },
     soldierBoyDir,
-    new TutorialData("Get the soldiers and boys to the other side of the river using the boat.", ["soldier.svg", "boy.svg"], ["soldier", "boy"], ["The boat can carry 2 boys, a soldier and a boy, but not 2 soldiers."],
+    new TutorialData("Get six soldiers and two boys to the other side of the river using the boat.", ["soldier.svg", "boy.svg"], ["soldier", "boy"], ["The boat can carry 2 boys, a soldier and a boy, but not 2 soldiers."],
         ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>soldiers</code>, <code>boys</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves soldiers and boys across the river."]),
     "//Move the first soldier and second boy across the river\nmoveBoat(soldiers[0], boys[1])\n\n//This is a for loop - it is used for repeating an action\n//Move the first soldier across the river 3 times\nfor(var i = 0; i < 3; i++) {\n    moveBoat(soldiers[0])\n}"
 );
