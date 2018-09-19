@@ -54,6 +54,7 @@ export class RiverAnimator implements Animator {
 
 	private readonly baseDir = './assets/river-crossing/';
 	private readonly commonDir = 'common/';
+	private textPool: svgjs.Text[] = []
 	//private readonly draw: svgjs.Doc = createDraw()
 
 	constructor(private readonly addMessage: (message: string, type?: string) => void, private readonly specificDir: string, private readonly draw: svgjs.Doc = createDraw()) {
@@ -114,86 +115,99 @@ export class RiverAnimator implements Animator {
 		//the index of the current state
 		let i = states.indexOf(state);
 
-
 		const [leftBankIDs, rightBankIDs] = sortIntoLeftAndRightSides(state.data.passengers)
 
-		//const leftBankIDs = [];
-		//const rightBankIDs = [];
+		let showSuccess = false;
+		let throwFatalError = false;
 
-		/*
-		Iterate through the current state's passengers and sort the IDs based on which side a passenger is on.
-		This code works because for every state in the array states, the array passengers preserves its order.
-		For example - if a passenger was at index 0 in the first state, it will still be at index 0 in the tenth state.
-		*/
-		/*
-		for (let i = 0; i < state.data.passengers.length; i++) {
-			let currentPassenger = state.data.passengers[i];
-			if (currentPassenger.side === 'left') {
-				leftBankIDs.push(i)
-			} else {
-				rightBankIDs.push(i)
-			}
+		if (state.status === RiverStatuses.SuccessStatus) {
+			showSuccess = true
+		} else if (state.status.severityLevel === SeverityLevel.FatalError) {
+			throwFatalError = true
+		} else if (state.status.severityLevel === SeverityLevel.NonFatalError) {
+			this.addMessage('Warning: ' + state.status.event, 'warning')
 		}
-		*/
 
-		//Check if it's the first state because the first state doesn't require animation
-		if (i === 0) {
-			this.drawRiverBank(leftBankXCoord, leftBankIDs);
-			this.drawRiverBank(rightBankXCoord, rightBankIDs);
+		let moveDirection = state.data.boat.side;
+
+		//Redraw the canvas in the direction of the movement - if the movement was from right to left ('left')
+		//then redraw the right side first
+		if (moveDirection === 'left') {
+			this.drawRiverBank(rightBankXCoord, rightBankIDs)
 		} else {
+			this.drawRiverBank(leftBankXCoord, leftBankIDs)
+		}
 
-			let showSuccess = false;
-			let throwFatalError = false;
+		//this.numberPuzzle()
 
-			if (state.status === RiverStatuses.SuccessStatus) {
-				showSuccess = true
-			} else if (state.status.severityLevel === SeverityLevel.FatalError) {
-				throwFatalError = true
-			} else if (state.status.severityLevel === SeverityLevel.NonFatalError) {
-				this.addMessage('Warning: ' + state.status.event, 'warning')
-			}
-
-			let moveDirection = state.data.boat.side;
-
-			//Redraw the canvas in the direction of the movement - if the movement was from right to left ('left')
-			//then redraw the right side first
-			if (moveDirection === 'left') {
-				this.drawRiverBank(rightBankXCoord, rightBankIDs)
-			} else {
-				this.drawRiverBank(leftBankXCoord, leftBankIDs)
-			}
-
-
-			//let movingPassengerIDs = [];
-
+		if (i !== 0) {
 			//Get list of passengers that have moved by checking a passenger's side
 			//in the previous state equals their side in the current state
 			let prevState = states[i - 1]
-
-			/*
-			for (let j = 0; j < prevState.data.passengers.length; j++) {
-				if (prevState.data.passengers[j].side !== state.data.passengers[j].side) {
-					movingPassengerIDs.push(j)
-				}
-			}
-			*/
 
 			let movingPassengerIDs = getMovingCrossers(state.data.passengers, prevState.data.passengers)
 
 			await this.animateCrossing(movingPassengerIDs, moveDirection);
 
-			if (moveDirection === Side.Left) {
-				this.drawRiverBank(leftBankXCoord, leftBankIDs)
-			} else {
-				this.drawRiverBank(rightBankXCoord, rightBankIDs)
-			}
+		}
 
-			if (throwFatalError) {
-				this.displayFatalError(state.status.event, state.status.errorData!, state.data.passengers)
-			} else if (showSuccess) {
-				this.addMessage(state.status.event, 'success')
-			}
+		if (moveDirection === Side.Left) {
+			this.drawRiverBank(leftBankXCoord, leftBankIDs)
+		} else {
+			this.drawRiverBank(rightBankXCoord, rightBankIDs)
+		}
 
+		this.numberPuzzle([], undefined)
+
+		if (throwFatalError) {
+			this.displayFatalError(state.status.event, state.status.errorData!, state.data.passengers)
+		} else if (showSuccess) {
+			this.addMessage(state.status.event, 'success')
+		}
+
+		//Put numbers on faces - if necessary
+		//Only draw numbers on soldier/priest puzzles
+		//this.numberPuzzle()
+	}
+
+	numberPuzzle(movingIDs: ReadonlyArray<number>, movingObjects: svgjs.G | undefined) {
+
+		this.textPool.map(text => text.remove())
+		this.textPool.splice(0, this.textPool.length)
+
+
+		let initState = states[0]
+		if (initState.data.passengers.some(passenger => passenger.type === 'soldier')) {
+			this.numberPassengers('soldier', 'boy', movingIDs, movingObjects)
+		} else if (initState.data.passengers.some(passenger => passenger.type === 'priest')) {
+			this.numberPassengers('vampire', 'priest', movingIDs, movingObjects)
+		}
+	}
+
+	numberPassengers(type1: string, type2: string, movingIDs: ReadonlyArray<number>, movingObjects: svgjs.G | undefined) {
+
+		let type1s = states[0].data.passengers.filter(passenger => passenger.type === type1)
+		let type2s = states[0].data.passengers.filter(passenger => passenger.type === type2)
+
+
+		const createText = (displayNum: number, drawingID: number) => {
+
+			const text = this.draw.text(displayNum.toString()).move(drawings.get(drawingID)!.x(), drawings.get(drawingID)!.y()).font({
+				weight: '700'
+			})
+			this.textPool.push(text)
+
+			if (movingIDs.includes(drawingID)) {
+				movingObjects!.add(text)
+			}
+		}
+
+		for (let i = 0; i < type1s.length; i++) {
+			createText(i, i)
+		}
+
+		for (let i = 0; i < type2s.length; i++) {
+			createText(i, type1s.length + i)
 		}
 	}
 
@@ -262,6 +276,8 @@ export class RiverAnimator implements Animator {
 			const targetXCoord = rightBankXCoord - boatSideLength;
 			const xShift = targetXCoord - startXCoord;
 
+			this.numberPuzzle(IDs, movingObjects)
+
 			movingObjects.animate(animationTime, '-', 0).move(xShift, 0);
 			await sleep(animationTime);
 
@@ -292,6 +308,9 @@ export class RiverAnimator implements Animator {
 			const xShift = -(rightBankXCoord - targetXCoord);
 
 			//Animate objects and wait until the animation is finished
+
+			this.numberPuzzle(IDs, movingObjects)
+
 			movingObjects.animate(animationTime, '-', 0).move(xShift, 0);
 			await sleep(animationTime);
 
