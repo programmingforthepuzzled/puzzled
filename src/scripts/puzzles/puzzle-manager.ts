@@ -159,7 +159,7 @@ export const agentActor = new RiverSetup(
         ["Anne.svg", "Anne_Agent.svg", "Bob.svg", "Bob_Agent.svg"],
         ["Anne", "Anne_Agent", "Bob", "Bob_Agent"],
         ["The boat can hold up to 2 people.",
-            "No actor can be in the presence of another agent unless their own agent is also present, because each agent is worried their rival will poach their client",
+            "No actor can be in the presence of another actor's agent unless their own agent is also present, because each agent is worried their rival will poach their client",
             "Anyone can row the boat."],
         ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>Anne</code>,<code>Anne_Agent</code>,<code>Bob</code>,<code>Bob_Agent</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves agents and actors across the river."]),
     "//Moves Anne and her agent across the river\nmoveBoat(Anne, Anne_Agent)")
