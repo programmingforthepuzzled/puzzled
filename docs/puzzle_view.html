@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <title>Puzzled!</title>
     <link rel="stylesheet" href="./css/bundle.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -55,13 +55,15 @@
         <hr style="padding: 0; margin: 0;">
         <div id="vue-app-message-display" class="half-container" style="overflow-y: auto">
             <template v-for="(message, index) of messages">
-                <p class="has-text-weight-semibold is-size-4" v-bind:class="typeToClass(message.type)"> {{ message.text }}
+                <p class="has-text-weight-semibold is-size-4" v-bind:class="typeToClass(message.type)"> {{ message.text
+                    }}
                 </p>
             </template>
         </div>
     </div>
 
-    <button id="vue-run-button" v-on:click="runUserCode()" class="center-button" v-bind:class="{spinner: runningCode}" v-bind:disabled="runningCode">{{
+    <button id="vue-run-button" v-on:click="runUserCode()" class="center-button" v-bind:class="{spinner: runningCode}"
+        v-bind:disabled="runningCode">{{
         text }}</button>
 
     <div id="vue-app-modal" class="modal" v-bind:class="{'is-active': active}">
