@@ -87,7 +87,7 @@ class BridgeSetup extends StandardSetup {
 
 }
 
-import { initGoatPuzzle, initHusbandPuzzle, initSoldierPuzzle, initVampirePuzzle, moveBoat } from './crossing-puzzles/river-setup'
+import { initGoatPuzzle, initActorPuzzle, initSoldierPuzzle, initVampirePuzzle, moveBoat } from './crossing-puzzles/river-setup'
 import { RiverAnimator } from './crossing-puzzles/river-animator';
 
 class RiverSetup extends StandardSetup {
@@ -147,23 +147,22 @@ export const soldierBoy = new RiverSetup(
     "//Move the first soldier and second boy across the river\nmoveBoat(soldiers[0], boys[1])\n\n//This is a for loop - it is used for repeating an action\n//Move the first soldier across the river 3 times\nfor(var i = 0; i < 3; i++) {\n    moveBoat(soldiers[0])\n}"
 );
 
-let husbandWifeDir = "husband-wife/";
+let agentActorDir = "agent-actor/";
 
-export const husbandWife = new RiverSetup(
+export const agentActor = new RiverSetup(
     () => {
-        let [Bob, Bob_Wife, Charlie, Charlie_Wife] = initHusbandPuzzle()
-        Object.assign(husbandWife.__environment__, { Bob, Bob_Wife, Charlie, Charlie_Wife })
+        let [Anne, Anne_Agent, Bob, Bob_Agent] = initActorPuzzle()
+        Object.assign(agentActor.__environment__, { Bob, Bob_Agent, Anne, Anne_Agent })
     },
-    husbandWifeDir,
-    new TutorialData("Get the jealous husbands and wives to the other side of the river using the boat.",
-        ["Bob.svg", "Bob_Wife.svg", "Charlie.svg", "Charlie_Wife.svg"],
-        ["Bob", "Bob_Wife", "Charlie", "Charlie_Wife"],
-        ["Charlie cannot be left alone with Bob's wife.",
-            "Bob cannot be left alone with Charlie's Wife.",
-            "The boat can hold up to 2 people.",
+    agentActorDir,
+    new TutorialData("Get the actors and their paranoid agents to the other side of the river using the boat.",
+        ["Anne.svg", "Anne_Agent.svg", "Bob.svg", "Bob_Agent.svg"],
+        ["Anne", "Anne_Agent", "Bob", "Bob_Agent"],
+        ["The boat can hold up to 2 people.",
+            "No actor can be in the presence of another agent unless their own agent is also present, because each agent is worried their rival will poach their client",
             "Anyone can row the boat."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>Bob</code>,<code>Bob_Wife</code>,<code>Charlie</code>,<code>Charlie_Wife</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves husbands and wives across the river."]),
-    "//Moves Bob and Charlie's Wife across the river\nmoveBoat(Bob, Charlie_Wife)")
+        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>Anne</code>,<code>Anne_Agent</code>,<code>Bob</code>,<code>Bob_Agent</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves agents and actors across the river."]),
+    "//Moves Anne and her agent across the river\nmoveBoat(Anne, Anne_Agent)")
 
 let ghoulDir = "./assets/bridge-crossing/ghoul-adventurer/";
 

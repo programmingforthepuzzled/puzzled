@@ -53,13 +53,13 @@ let runButtonVueManager = new Vue({
     }
 })
 
-import { goatCabbageWolf, vampirePriest, soldierBoy, husbandWife, ghoul } from "./puzzles/puzzle-manager";
+import { goatCabbageWolf, vampirePriest, soldierBoy, agentActor, ghoul } from "./puzzles/puzzle-manager";
 
 let puzzles = new Map();
 puzzles.set("Wolves and Goats", goatCabbageWolf);
 puzzles.set("Priests and Vampires", vampirePriest);
 puzzles.set("Soldiers and Boys", soldierBoy);
-puzzles.set("Husbands and Wives", husbandWife);
+puzzles.set("Actors and Agents", agentActor);
 puzzles.set("Ghouls and Adventurers", ghoul)
 
 //set current puzzle

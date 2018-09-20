@@ -275,11 +275,11 @@ export const initSoldierPuzzle = function (): ReadonlyArray<ReadonlyArray<Passen
 
 };
 
-export const initHusbandPuzzle = function (): ReadonlyArray<Passenger> {
+export const initActorPuzzle = function (): ReadonlyArray<Passenger> {
 
-    const boat = new Boat(["Bob", "Bob_Wife", "Charlie", "Charlie_Wife"], 2);
-    const passengers = [new Passenger("Bob", 1), new Passenger("Bob_Wife", 1), new Passenger("Charlie", 1), new Passenger("Charlie_Wife", 1)];
-    const rules = [new SameSideRule('Charlie', 'Bob_Wife', 'Bob'), new SameSideRule('Bob', 'Charlie_Wife', 'Charlie')];
+    const boat = new Boat(["Anne", "Anne_Agent", "Bob", "Bob_Agent"], 2);
+    const passengers = [new Passenger("Anne", 1), new Passenger("Anne_Agent", 1), new Passenger("Bob", 1), new Passenger("Bob_Agent", 1)];
+    const rules = [new SameSideRule('Anne', 'Bob_Agent', 'Anne_Agent'), new SameSideRule('Bob', 'Anne_Agent', 'Bob_Agent')];
     puzzle = new RiverPuzzle(passengers, boat, rules);
     states = puzzle.states
 
