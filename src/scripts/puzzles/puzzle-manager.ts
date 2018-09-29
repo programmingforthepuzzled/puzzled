@@ -4,6 +4,8 @@ import * as MessageDisplay from '../ui/message-view'
 
 import { Animator } from './base-animator'
 
+//TODO - finish migrating multiline strings to stripIndent
+import { stripIndent } from 'common-tags'
 
 class TutorialData {
 
@@ -119,8 +121,16 @@ export const goatCabbageWolf = new RiverSetup(
             "The goat cannot be left alone with the apple.",
             "Only the farmer can row the boat.",
             "The boat can hold up to 2 objects."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>goat</code>, <code>wolf</code>, <code>farmer</code>, <code>apple</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves objects across the river on the boat."]),
-    "//Moves the farmer and apple across the river\nmoveBoat(farmer, apple)");
+        [stripIndent`
+        <strong>Function:</strong> <code>moveBoat</code><br>
+        <strong>Inputs:</strong> <code>goat</code>, <code>wolf</code>, <code>farmer</code>, <code>apple</code><br>
+        <strong>Number of Inputs:</strong> 1 to 2<br>
+        <strong>Description</strong>: Moves objects across the river on the boat.
+        `]),
+    stripIndent`
+        //Moves the farmer and apple across the river
+        moveBoat(farmer, apple)
+        `);
 
 let vampirePriestDir = "vampire-priest/";
 
@@ -131,8 +141,16 @@ export const vampirePriest = new RiverSetup(
     },
     vampirePriestDir,
     new TutorialData("Get three priests and three vampires to the other side of the river using the boat.", ["priest.svg", "vampire.svg"], ["priest", "vampire"], ["The boat can hold a maximum of 2 people.", "The number of vampires cannot exceed the number of priests on either side of the river.", "Anyone can row the boat."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>vampires</code>, <code>priests</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description:</strong> Moves vampires and priests across the river."]),
-    "//Moves the first vampire and second priest across the river\nmoveBoat(vampires[0], priests[1])");
+        [stripIndent`
+        <strong>Function:</strong> <code>moveBoat</code><br>
+        <strong>Inputs:</strong> Objects within the arrays <code>vampires</code>, <code>priests</code><br>
+        <strong>Number of Inputs:</strong> 1 to 2<br>
+        <strong>Description:</strong> Moves vampires and priests across the river.
+        `]),
+    stripIndent`
+        //Moves the first vampire and second priest across the river
+        moveBoat(vampires[0], priests[1])
+        `);
 
 let soldierBoyDir = "soldier-boy/";
 
@@ -144,7 +162,16 @@ export const soldierBoy = new RiverSetup(
     soldierBoyDir,
     new TutorialData("Get six soldiers and two boys to the other side of the river using the boat.", ["soldier.svg", "boy.svg"], ["soldier", "boy"], ["The boat can carry 2 boys, a soldier and a boy, but not 2 soldiers."],
         ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> Objects within the arrays <code>soldiers</code>, <code>boys</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves soldiers and boys across the river."]),
-    "//Move the first soldier and second boy across the river\nmoveBoat(soldiers[0], boys[1])\n\n//This is a for loop - it is used for repeating an action\n//Move the first soldier across the river 3 times\nfor(var i = 0; i < 3; i++) {\n    moveBoat(soldiers[0])\n}"
+    stripIndent`
+    //Moves the first soldier and second boy across the river
+    moveBoat(soldiers[0], boys[1])
+
+    //This is a for loop - it is used for repeating an action
+    //Move the first soldier across the river 3 times
+    for(var i = 0; i < 3; i++) {
+        moveBoat(soldiers[0])
+    }
+    `
 );
 
 let agentActorDir = "agent-actor/";

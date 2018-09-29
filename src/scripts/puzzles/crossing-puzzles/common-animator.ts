@@ -24,7 +24,3 @@ export const getBaseDimensions = function (draw: svgjs.Doc): number[] {
 export const getCenterY = function (imageHeight: number, totalHeight: number) {
     return totalHeight / 2 - (imageHeight / 2)
 }
-
-export async function sleep(milliseconds: number) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-}

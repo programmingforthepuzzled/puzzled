@@ -11,7 +11,6 @@
   }
 }
 */
-
 {
   "compilerOptions": {
     // ...
@@ -20,8 +19,6 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "sourceMap": true,
-    "target": "es6",
-    "lib": ["es2015", "es2017", "dom"]
-    // ...
+    "target": "es6" // ...
   }
 }

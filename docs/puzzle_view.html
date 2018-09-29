@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Puzzled!</title>
     <link rel="stylesheet" href="./css/bundle.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Puzzled!</title>
 
     <!-- Vue.js -->
     <script src="./lib/vue/vue.js"></script>
@@ -49,7 +49,7 @@
 
 <body style="display:flex; flex-flow: row; position: relative;">
 
-    <div id="editor" style="flex: 1;"></div>
+    <div id="editor" style="flex: 1; overflow: hidden;"></div>
     <div class="vertical-container" style="flex: 1;">
         <div id="animation-container" class="half-container" style="overflow: hidden"></div>
         <hr style="padding: 0; margin: 0;">
@@ -111,8 +111,42 @@
 </body>
 
 <!-- Libraries-->
+<!--
 <script src="./lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+-->
+
 <script src="./lib/svg/svg.js"></script>
+
+<script src="lib/monaco-editor/dev/vs/loader.js"></script>
+<script>
+    require.config({ paths: { 'vs': 'lib/monaco-editor/dev/vs' } });
+    require(['vs/editor/editor.main'], function () {
+        monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+            noSemanticValidation: false,
+            noSyntaxValidation: false
+        });
+
+        monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+            target: monaco.languages.typescript.ScriptTarget.ES2016,
+            allowNonTsExtensions: true,
+            noLib: true
+        });
+
+        window.puzzledEditor = monaco.editor.create(document.getElementById('editor'), {
+            value: '',
+            language: 'javascript',
+            scrollBeyondLastLine: false,
+            theme: "vs-dark",
+            minimap: {
+                enabled: false
+            },
+            automaticLayout: true,
+            wordWrap: "on",
+
+        });
+        puzzledEditor._standaloneKeybindingService.addDynamicKeybinding("-actions.find")
+    });
+</script>
 
 <!-- Page Code -->
 <script src="main.js"></script>

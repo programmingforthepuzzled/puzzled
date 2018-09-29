@@ -1,5 +1,6 @@
 import { Animator, createDraw } from "../base-animator";
-import { getBaseDimensions, sleep, sortIntoLeftAndRightSides, getMovingCrossers } from "./common-animator";
+import { getBaseDimensions, sortIntoLeftAndRightSides, getMovingCrossers } from "./common-animator";
+import sleep from '../../utils'
 import { Side } from './common-setup'
 import { SeverityLevel } from '../base-puzzle-setup'
 import { states, GhoulState, GhoulStatus } from './bridge-setup'

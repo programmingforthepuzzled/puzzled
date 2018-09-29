@@ -37,7 +37,12 @@
     "regenerator-runtime": "^0.12.1",
     "typescript": "^3.0.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/common-tags": "^1.4.0",
+    "common-tags": "^1.8.0",
+    "monaco-editor": "^0.14.3",
+    "snap": "^0.2.2"
+  },
   "browserslist_comments": {
     "last 1 Chrome version": "Chrome 67 as of 10/8/18",
     "meta": "There is no browserslist right now - there was, at one point"

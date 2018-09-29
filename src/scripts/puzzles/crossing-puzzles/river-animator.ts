@@ -3,7 +3,8 @@
 import { SeverityLevel } from '../base-puzzle-setup'
 import { Animator, createDraw } from '../base-animator'
 import { states, RiverState, RiverStatuses, Passenger, RiverErrorData } from './river-setup'
-import { sortIntoLeftAndRightSides, getMovingCrossers, getBaseDimensions, sleep, getCenterY } from './common-animator';
+import { sortIntoLeftAndRightSides, getMovingCrossers, getBaseDimensions, getCenterY } from './common-animator';
+import sleep from '../../utils'
 import { Side } from './common-setup';
 
 //let states: State[]
