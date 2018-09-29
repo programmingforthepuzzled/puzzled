@@ -2,6 +2,7 @@
 import 'regenerator-runtime/runtime'
 import { codeErrorAlert } from './ui/alerts'
 
+/*
 //Setup Ace Editor
 let editor = ace.edit('editor');
 editor.setTheme("ace/theme/monokai");
@@ -9,6 +10,7 @@ editor.session.setMode("ace/mode/javascript");
 editor.setShowPrintMargin(false);
 editor.getSession().setUseWrapMode(true);
 editor.setFontSize(20)
+*/
 
 const runButtonID = "vue-run-button"
 let runButtonVueManager = new Vue({

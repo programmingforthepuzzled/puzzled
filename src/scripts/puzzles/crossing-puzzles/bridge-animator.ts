@@ -7,13 +7,13 @@ import { states, GhoulState, GhoulStatus } from './bridge-setup'
 export class BridgeAnimator implements Animator {
 
 	private readonly characterSideLength: number
-	private drawings = new Map<number, svgjs.Image>();
+	private readonly drawings = new Map<number, svgjs.Image>();
 	private readonly fileExtension = '.svg'
 
 	private readonly baseWidth: number;
 	private readonly baseHeight: number;
 
-	private readonly numCharsOnSide = 4;
+	private readonly charsOnSide = 4;
 	private readonly sideWidth: number;
 
 	private readonly bridgeHeightToWidthRatio = 140 / 512;
@@ -29,10 +29,13 @@ export class BridgeAnimator implements Animator {
 		this.draw.clear();
 
 		[this.baseWidth, this.baseHeight] = getBaseDimensions(this.draw)
+		console.log(this.baseHeight)
 		this.characterSideLength = this.baseWidth / 16
-		this.sideWidth = this.characterSideLength * this.numCharsOnSide;
+		this.sideWidth = this.characterSideLength * this.charsOnSide;
 		this.bridgeHeight = (this.baseWidth - (2 * this.sideWidth)) * this.bridgeHeightToWidthRatio
 		this.bridgeYCoord = this.baseHeight - this.bridgeHeight
+		console.log(this.bridgeHeight)
+		console.log(this.bridgeYCoord)
 		this.timePassedText = this.draw.text("Time passed: " + 0)
 		this.timePassedText.font({
 			family: 'Helvetica',
@@ -202,7 +205,6 @@ export class BridgeAnimator implements Animator {
 			currentCoord = 0;
 		} else {
 			currentCoord = this.baseWidth;
-			//check if this works w/ pass by ref or value
 			increment *= -1
 			currentCoord += increment
 		}
