@@ -28,15 +28,14 @@ let runButtonVueManager = new Vue({
             this.startRunning()
             this.runningCode = true
 
-            /*
-            for (let annotation of editor.getSession().getAnnotations()) {
-                if (annotation.type === 'warning' || annotation.type === 'error') {
+
+            if (window.getMarkers) {
+                if (window.getMarkers().some(marker => marker.severity == 8 || marker.severity == 4)) {
                     codeErrorAlert()
                     this.stopRunning()
                     return;
                 }
             }
-            */
 
             currentPuzzle.setupCode();
 
@@ -47,7 +46,6 @@ let runButtonVueManager = new Vue({
             } catch (error) {
                 await currentPuzzle.endCode(error)
             }
-
             this.stopRunning()
         },
         startRunning: function () {
@@ -65,23 +63,46 @@ let runButtonVueManager = new Vue({
 let modalController = require('./ui/modal-controller');
 modalController.initModal(currentPuzzle.tutorialData);
 
-runButtonVueManager.runUserCode()
+async function postSVGInitialization() {
+
+    runButtonVueManager.runUserCode()
+
+    let title = document.createElement('title')
+    title.textContent = 'Animation'
+    title.id = 'title'
+    let description = document.createElement('desc')
+    description.textContent = 'Displays the animation'
+    description.id = 'desc'
+
+    const svgElement = document.getElementById('animation-container').querySelector('svg')
+
+    svgElement.insertBefore(description, svgElement.childNodes[0])
+    svgElement.insertBefore(title, svgElement.childNodes[0])
+
+    svgElement.setAttribute('role', 'img')
+    svgElement.setAttribute('aria-labelledby', 'title')
+    svgElement.setAttribute('aria-describedby', 'desc')
+}
+
+postSVGInitialization()
 
 //Freeze button's height so it doesn't shrink when code is running
 const runButton = document.getElementById(runButtonID)
 runButton.style.height = (runButton.clientHeight + 4) + "px"
 
 
-//Wait until monaco editor is loaded - then get value
-async function setInitialCode() {
+//Wait until monaco editor is loaded, then add puzzle type defs and initial code
+async function initializeEditor() {
 
-    while (!window.puzzledEditor) {
+    while (!window.puzzledEditor || !window.addPuzzleLib) {
         await sleep(10)
     }
 
+    window.addPuzzleLib(currentPuzzle.typeDefs)
     window.puzzledEditor.setValue(currentPuzzle.initialCode)
 }
 
-setInitialCode()
+initializeEditor()
+
 
 

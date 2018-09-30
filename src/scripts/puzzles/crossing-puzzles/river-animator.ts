@@ -3,9 +3,9 @@
 import { SeverityLevel } from '../base-puzzle-setup'
 import { Animator, createDraw } from '../base-animator'
 import { states, RiverState, RiverStatuses, Passenger, RiverErrorData } from './river-setup'
-import { sortIntoLeftAndRightSides, getMovingCrossers, getBaseDimensions, getCenterY } from './common-animator';
+import { sortIntoLeftAndRightSides, getMovingCrossers, getBaseDimensions, getCenterY, finalizeMessages } from './common-animator';
 import sleep from '../../utils'
-import { Side } from './common-setup';
+import { Side, Crosser } from './common-setup';
 
 //let states: State[]
 
@@ -50,6 +50,10 @@ let animationTime = 1200;
 
 
 //let addMessage: (message: string, type?: string) => void
+
+class Pair {
+	constructor(public readonly display: number, public readonly real: number) { }
+}
 
 export class RiverAnimator implements Animator {
 
@@ -139,8 +143,6 @@ export class RiverAnimator implements Animator {
 			this.drawRiverBank(leftBankXCoord, leftBankIDs)
 		}
 
-		//this.numberPuzzle()
-
 		if (i !== 0) {
 			//Get list of passengers that have moved by checking a passenger's side
 			//in the previous state equals their side in the current state
@@ -166,9 +168,39 @@ export class RiverAnimator implements Animator {
 			this.addMessage(state.status.event, 'success')
 		}
 
-		//Put numbers on faces - if necessary
-		//Only draw numbers on soldier/priest puzzles
-		//this.numberPuzzle()
+
+		//If the state is the final state and accessibility info is turned on - show a report summarizing the end state of the puzzle
+		//It would be better if accessibility info was passed in as a boolean through the constructor, but it's not necessary right now
+		//This probably can be moved into common-animator. But I haven't figured out how yet.
+		if (sessionStorage.getItem('accessibility') === 'yes') {
+			if (i === states.length - 1) {
+				let description: string[] = []
+				//let description = "Final State:<br>";
+				let result = this.checkSoldierOrPriest()
+				let pairs: Pair[]
+				let displayIndex = false
+
+
+				if (result === 1) {
+					displayIndex = true
+					pairs = this.generateDisplayNums('soldier', 'boy')
+
+				} else if (result === 2) {
+					displayIndex = true
+					pairs = this.generateDisplayNums('vampire', 'priest')
+				}
+
+				state.data.passengers.forEach((val, index) => {
+					if (displayIndex) {
+						description.push(`${val.type} ${pairs[index].display} is on the ${val.side} side.`)
+					} else {
+						description.push(`${val.type} is on the ${val.side} side.`)
+					}
+				})
+
+				this.addMessage(finalizeMessages(description, "Final state:"), 'success')
+			}
+		}
 	}
 
 	numberPuzzle(movingIDs: ReadonlyArray<number>, movingObjects: svgjs.G | undefined) {
@@ -176,19 +208,42 @@ export class RiverAnimator implements Animator {
 		this.textPool.map(text => text.remove())
 		this.textPool.splice(0, this.textPool.length)
 
-
-		let initState = states[0]
-		if (initState.data.passengers.some(passenger => passenger.type === 'soldier')) {
+		let result = this.checkSoldierOrPriest()
+		if (result === 1) {
 			this.numberPassengers('soldier', 'boy', movingIDs, movingObjects)
-		} else if (initState.data.passengers.some(passenger => passenger.type === 'priest')) {
+		} else if (result === 2) {
 			this.numberPassengers('vampire', 'priest', movingIDs, movingObjects)
 		}
 	}
 
-	numberPassengers(type1: string, type2: string, movingIDs: ReadonlyArray<number>, movingObjects: svgjs.G | undefined) {
+	checkSoldierOrPriest(): number {
+		if (states[0].data.passengers.some(passenger => passenger.type === 'soldier')) {
+			return 1;
+		} else if (states[0].data.passengers.some(passenger => passenger.type === 'priest')) {
+			return 2;
+		} else {
+			return 0;
+		}
+	}
 
+	generateDisplayNums(type1: string, type2: string): Pair[] {
 		let type1s = states[0].data.passengers.filter(passenger => passenger.type === type1)
 		let type2s = states[0].data.passengers.filter(passenger => passenger.type === type2)
+
+		let pairs = []
+
+		for (let i = 0; i < type1s.length; i++) {
+			pairs.push(new Pair(i, i))
+		}
+
+		for (let i = 0; i < type2s.length; i++) {
+			pairs.push(new Pair(i, type1s.length + i))
+		}
+
+		return pairs
+	}
+
+	numberPassengers(type1: string, type2: string, movingIDs: ReadonlyArray<number>, movingObjects: svgjs.G | undefined) {
 
 
 		const createText = (displayNum: number, drawingID: number) => {
@@ -196,6 +251,7 @@ export class RiverAnimator implements Animator {
 			const text = this.draw.text(displayNum.toString()).move(drawings.get(drawingID)!.x(), drawings.get(drawingID)!.y()).font({
 				weight: '700'
 			})
+
 			this.textPool.push(text)
 
 			if (movingIDs.includes(drawingID)) {
@@ -203,12 +259,10 @@ export class RiverAnimator implements Animator {
 			}
 		}
 
-		for (let i = 0; i < type1s.length; i++) {
-			createText(i, i)
-		}
+		let pairs = this.generateDisplayNums(type1, type2)
 
-		for (let i = 0; i < type2s.length; i++) {
-			createText(i, type1s.length + i)
+		for (let pair of pairs) {
+			createText(pair.display, pair.real)
 		}
 	}
 

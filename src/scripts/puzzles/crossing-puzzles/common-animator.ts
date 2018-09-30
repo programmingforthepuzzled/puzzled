@@ -24,3 +24,22 @@ export const getBaseDimensions = function (draw: svgjs.Doc): number[] {
 export const getCenterY = function (imageHeight: number, totalHeight: number) {
     return totalHeight / 2 - (imageHeight / 2)
 }
+
+export const finalizeMessages = function (messages: string[], ...prepends: string[]): string {
+    let rightBank: string[] = []
+    let leftBank: string[] = []
+
+    messages.map(text => {
+        if (text.includes('is on the right side')) {
+            rightBank.push(text)
+        } else {
+            leftBank.push(text)
+        }
+    })
+
+    messages = leftBank.concat(rightBank)
+
+    messages = prepends.concat(messages)
+
+    return messages.join('<br>')
+}

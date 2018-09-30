@@ -1,5 +1,5 @@
 import { Animator, createDraw } from "../base-animator";
-import { getBaseDimensions, sortIntoLeftAndRightSides, getMovingCrossers } from "./common-animator";
+import { getBaseDimensions, sortIntoLeftAndRightSides, getMovingCrossers, finalizeMessages } from "./common-animator";
 import sleep from '../../utils'
 import { Side } from './common-setup'
 import { SeverityLevel } from '../base-puzzle-setup'
@@ -122,6 +122,19 @@ export class BridgeAnimator implements Animator {
 		this.updateTimePassed(state.data.timePassed)
 		this.updateTorch(state)
 
+		if (sessionStorage.getItem('accessibility') === 'yes') {
+			//This code is
+			if (i === states.length - 1) {
+				let description: string[] = []
+
+				state.data.adventurers.forEach(val => {
+					description.push(`${val.name} is on the ${val.side} side.`)
+				})
+
+				this.addMessage(finalizeMessages(description, "Final state:", `${this.getAdventurerWithTorch(state)} has the torch`), 'success')
+			}
+		}
+
 	}
 
 	private displayFatalError(message: string) {
@@ -136,9 +149,15 @@ export class BridgeAnimator implements Animator {
 		this.timePassedText.text("Time Passed: " + timePassed)
 	}
 
+	private getAdventurerWithTorch(state: GhoulState): string {
+		let [adventurerName] = state.data.adventurers.filter(adventurer => adventurer.hasTorch).map(adventurer => adventurer.name)
+		return adventurerName
+	}
+
 	private updateTorch(state: GhoulState) {
 
-		let [adventurerName] = state.data.adventurers.filter(adventurer => adventurer.hasTorch).map(adventurer => adventurer.name)
+		//let [adventurerName] = state.data.adventurers.filter(adventurer => adventurer.hasTorch).map(adventurer => adventurer.name)
+		let adventurerName = this.getAdventurerWithTorch(state)
 		let [adventurerID] = state.data.adventurers.filter(adventurer => adventurer.name === adventurerName).map(adventurer => state.data.adventurers.indexOf(adventurer))
 
 		let image = this.drawings.get(adventurerID)

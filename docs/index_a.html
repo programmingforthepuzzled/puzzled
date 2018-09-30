@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <title>Puzzled!</title>
     <link rel="stylesheet" href="./css/accessible/normalize.css">
     <link rel="stylesheet" href="./css/accessible/sakura.css">
 
@@ -37,7 +37,7 @@
         }
 
         button:hover {
-            background-color: #ffffff;
+            background-color: #f9f9f9;
             border: 2px solid var(--button-color);
             color: var(--button-color);
         }
@@ -60,17 +60,19 @@
 
     <header>
         <h1>Puzzled!</h1>
-        <h3>Solve 5 different puzzles in Javascript</h3>
+        <!-- Manually override h2 style so it looks like h3.
+        For accessibility purposes, only a h1 or h2 should follow a h1-->
+        <h2 style="font-size: 1.75em">Solve 5 different puzzles in Javascript</h2>
     </header>
 
 
-    <div class="vertical-group fill-vertical">
+    <nav class="vertical-group fill-vertical">
         <button>Wolves and Goats</button>
-        <button>Husbands and Wives</button>
+        <button>Actors and Agents</button>
         <button>Soldiers and Boys</button>
         <button>Priests and Vampires</button>
         <button>Ghouls and Adventurers</button>
-    </div>
+    </nav>
 
 </body>
 
@@ -81,6 +83,7 @@
             var button = buttons[i]
             button.addEventListener('click', function () {
                 sessionStorage.setItem('puzzleID', button.innerHTML);
+                sessionStorage.setItem('accessibility', 'yes')
                 window.location.href = './puzzle_view.html';
             });
         })()

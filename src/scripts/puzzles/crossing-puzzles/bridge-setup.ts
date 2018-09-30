@@ -130,10 +130,10 @@ function preCrossingErrors(adventurers: Adventurer[]): Status | null {
 export const initGhoulPuzzle = function (): Adventurer[] {
 
 
-    let Alice = new Adventurer('Alice', 1, Side.Left, true)
-    let Bob = new Adventurer('Bob', 2)
-    let Charlie = new Adventurer('Charlie', 5)
-    let Doris = new Adventurer('Doris', 10)
+    let Alice = new Adventurer('alice', 1, Side.Left, true)
+    let Bob = new Adventurer('bob', 2)
+    let Charlie = new Adventurer('charlie', 5)
+    let Doris = new Adventurer('doris', 10)
 
     let adventurers = [Alice, Bob, Charlie, Doris]
 

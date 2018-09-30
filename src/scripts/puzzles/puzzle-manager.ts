@@ -51,6 +51,8 @@ abstract class PuzzleSetup {
 
     abstract createAnimator(): Animator
 
+    abstract typeDefs: string
+
     protected constructor(specificSetupCode: Function, public readonly tutorialData: TutorialData, public readonly initialCode: string) {
 
         this.setupCode = () => {
@@ -82,8 +84,17 @@ class BridgeSetup extends StandardSetup {
 
     animatorConstructor = BridgeAnimator
 
-    constructor(specificSetupCode: Function, assetsDir: string, tutorialData: TutorialData, initialCode: string) {
+    public readonly typeDefs: string
+
+    constructor(specificSetupCode: Function, assetsDir: string, tutorialData: TutorialData, initialCode: string, typeDefs: string) {
         super(assetsDir, specificSetupCode, tutorialData, initialCode)
+        this.typeDefs = stripIndent`
+        declare class Adventurer {
+            private constructor()
+         }
+        declare function crossBridge(...adventurers: Adventurer[]): void
+        declare function giveTorch(adventurer: Adventurer): void
+        ` + "\n" + typeDefs
         this.tutorialData.images = this.tutorialData.images.map(image => this.assetsDir + image)
     }
 
@@ -98,15 +109,21 @@ class RiverSetup extends StandardSetup {
 
     animatorConstructor = RiverAnimator
 
-    constructor(specificSetupCode: Function, assetsDir: string, tutorialData: TutorialData, initialCode: string) {
+    public readonly typeDefs: string
+
+    constructor(specificSetupCode: Function, assetsDir: string, tutorialData: TutorialData, initialCode: string, typeDefs: string) {
         super(assetsDir, specificSetupCode, tutorialData, initialCode)
+        this.typeDefs = stripIndent`
+        declare class Passenger {
+            private constructor()
+        }
+        declare const moveBoat = function(...passengers: Passenger[]): void
+        ` + '\n' + typeDefs
         this.tutorialData.images = this.tutorialData.images.map(image => './assets/river-crossing/' + this.assetsDir + image)
     }
 }
 
 let goatCabbageWolfDir = "goat-apple-wolf/";
-
-
 
 export const goatCabbageWolf = new RiverSetup(
     () => {
@@ -130,7 +147,8 @@ export const goatCabbageWolf = new RiverSetup(
     stripIndent`
         //Moves the farmer and apple across the river
         moveBoat(farmer, apple)
-        `);
+        `,
+    "declare const farmer: Passenger, goat: Passenger, wolf: Passenger, apple: Passenger;");
 
 let vampirePriestDir = "vampire-priest/";
 
@@ -150,7 +168,8 @@ export const vampirePriest = new RiverSetup(
     stripIndent`
         //Moves the first vampire and second priest across the river
         moveBoat(vampires[0], priests[1])
-        `);
+        `,
+    "declare const vampires: Passenger[], priests: Passenger[];");
 
 let soldierBoyDir = "soldier-boy/";
 
@@ -171,39 +190,40 @@ export const soldierBoy = new RiverSetup(
     for(var i = 0; i < 3; i++) {
         moveBoat(soldiers[0])
     }
-    `
-);
+    `,
+    "declare const soldiers: Passenger[], boys: Passenger[];");
 
 let agentActorDir = "agent-actor/";
 
 export const agentActor = new RiverSetup(
     () => {
-        let [Anne, Anne_Agent, Bob, Bob_Agent] = initActorPuzzle()
-        Object.assign(agentActor.__environment__, { Bob, Bob_Agent, Anne, Anne_Agent })
+        let [anne, anne_agent, bob, bob_agent] = initActorPuzzle()
+        Object.assign(agentActor.__environment__, { anne, anne_agent, bob, bob_agent })
     },
     agentActorDir,
     new TutorialData("Get the actors and their paranoid agents to the other side of the river using the boat.",
-        ["Anne.svg", "Anne_Agent.svg", "Bob.svg", "Bob_Agent.svg"],
-        ["Anne", "Anne_Agent", "Bob", "Bob_Agent"],
+        ["anne.svg", "anne_agent.svg", "bob.svg", "bob_agent.svg"],
+        ["anne", "anne_agent", "bob", "bob_agent"],
         ["The boat can hold up to 2 people.",
             "No actor can be in the presence of another actor's agent unless their own agent is also present, because each agent is worried their rival will poach their client",
             "Anyone can row the boat."],
-        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>Anne</code>,<code>Anne_Agent</code>,<code>Bob</code>,<code>Bob_Agent</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves agents and actors across the river."]),
-    "//Moves Anne and her agent across the river\nmoveBoat(Anne, Anne_Agent)")
+        ["<strong>Function:</strong> <code>moveBoat</code><br>\n<strong>Inputs:</strong> <code>anne</code>,<code>anne_agent</code>,<code>bob</code>,<code>bob_agent</code><br>\n<strong>Number of Inputs:</strong>  1 to 2<br>\n<strong>Description:</strong> Moves agents and actors across the river."]),
+    "//Moves Anne and her agent across the river\nmoveBoat(anne, anne_agent)",
+    'declare const anne: Passenger, anne_agent: Passenger, bob: Passenger, bob_agent: Passenger')
 
 let ghoulDir = "./assets/bridge-crossing/ghoul-adventurer/";
 
 export const ghoul = new BridgeSetup(
     () => {
-        let [Alice, Bob, Charlie, Doris] = initGhoulPuzzle()
-        Object.assign(ghoul.__environment__, { Alice, Bob, Charlie, Doris })
+        let [alice, bob, charlie, doris] = initGhoulPuzzle()
+        Object.assign(ghoul.__environment__, { alice, bob, charlie, doris })
     },
     ghoulDir,
     new TutorialData("Get all four adventurers to the other side of the bridge.",
-        ["Alice.svg", "Bob.svg", "Charlie.svg", "Doris.svg"],
-        ["Alice", "Bob", "Charlie", "Doris"],
+        ["alice.svg", "bob.svg", "charlie.svg", "doris.svg"],
+        ["alice", "bob", "charlie", "doris"],
         ["Alice, Bob, Charlie, and Doris can cross the bridge in 1, 2, 5, and 10 minutes respectively", "All 4 adventurers must cross the bridge in 17 minutes or less, otherwise a ghoul appears", "The bridge can only bear the weight of 2 people at a time", "Crossing the bridge is impossible without the torch"],
-        ["<strong>Function:</strong> <code>crossBridge</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves adventurers across the bridge.", "<strong>Function:</strong> <code>giveTorch</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1<br>\n<strong>Description</strong>: Gives the torch to an adventurer."]),
-    "//Moves Alice and Doris across the Bridge\ncrossBridge(Alice, Doris)\n//Gives torch to Doris\ngiveTorch(Doris)"
-)
+        ["<strong>Function:</strong> <code>crossBridge</code><br>\n<strong>Inputs:</strong> <code>alice</code>, <code>bob</code>, <code>charlie</code>, <code>doris</code><br>\n<strong>Number of Inputs:</strong> 1 to 2<br>\n<strong>Description</strong>: Moves adventurers across the bridge.", "<strong>Function:</strong> <code>giveTorch</code><br>\n<strong>Inputs:</strong> <code>Alice</code>, <code>Bob</code>, <code>Charlie</code>, <code>Doris</code><br>\n<strong>Number of Inputs:</strong> 1<br>\n<strong>Description</strong>: Gives the torch to an adventurer."]),
+    "//Moves Alice and Doris across the Bridge\ncrossBridge(alice, doris)\n//Gives torch to Doris\ngiveTorch(doris)",
+    'declare const alice: Adventurer, bob: Adventurer, charlie: Adventurer, doris: Adventurer')
 

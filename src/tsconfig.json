@@ -19,6 +19,12 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "sourceMap": true,
-    "target": "es6" // ...
+    "target": "es6",
+    //Needed for for intellisense to not throw errors in .ts files (e.g - Object.values doesn't exist)
+    "lib": [
+      "es2015",
+      "es2017",
+      "dom"
+    ]
   }
 }

@@ -277,9 +277,9 @@ export const initSoldierPuzzle = function (): ReadonlyArray<ReadonlyArray<Passen
 
 export const initActorPuzzle = function (): ReadonlyArray<Passenger> {
 
-    const boat = new Boat(["Anne", "Anne_Agent", "Bob", "Bob_Agent"], 2);
-    const passengers = [new Passenger("Anne", 1), new Passenger("Anne_Agent", 1), new Passenger("Bob", 1), new Passenger("Bob_Agent", 1)];
-    const rules = [new SameSideRule('Anne', 'Bob_Agent', 'Anne_Agent'), new SameSideRule('Bob', 'Anne_Agent', 'Bob_Agent')];
+    const boat = new Boat(["anne", "anne_agent", "bob", "bob_agent"], 2);
+    const passengers = [new Passenger("anne", 1), new Passenger("anne_agent", 1), new Passenger("bob", 1), new Passenger("bob_agent", 1)];
+    const rules = [new SameSideRule('anne', 'bob_agent', 'anne_agent'), new SameSideRule('bob', 'anne_agent', 'bob_agent')];
     puzzle = new RiverPuzzle(passengers, boat, rules);
     states = puzzle.states
 

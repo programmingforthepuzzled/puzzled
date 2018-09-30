@@ -54,16 +54,16 @@
                 <p class="title">Actors and Agents</p>
                 <div class="imageRow">
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/Bob.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/bob.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/Bob_Agent.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/bob_agent.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/Anne.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/anne.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/Anne_Agent.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/river-crossing/agent-actor/anne_agent.svg"></object>
                     </figure>
                 </div>
             </div>
@@ -95,16 +95,16 @@
                 <p class="title">Ghouls and Adventurers</p>
                 <div class="imageRow" style="flex: 1; align-items: center">
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Alice.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/alice.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Bob.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/bob.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Charlie.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/charlie.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
-                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/Doris.svg"></object>
+                        <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/doris.svg"></object>
                     </figure>
                     <figure class="image is-96x96 is-marginless">
                         <object class="svg-96x96" type="image/svg+xml" data="./assets/bridge-crossing/ghoul-adventurer/ghost.svg"></object>
@@ -126,6 +126,7 @@
             tile.style.cursor = "pointer"
             tile.addEventListener("click", function () {
                 sessionStorage.setItem('puzzleID', tile.children[0].textContent);
+                sessionStorage.setItem('accessibility', 'no');
                 window.location.href = './puzzle_view.html';
             });
             //This for loops sets a style on all <object> tags
