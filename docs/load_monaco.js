@@ -1,4 +1,4 @@
-require.config({ paths: { 'vs': 'lib/monaco-editor/dev/vs' } });
+require.config({ paths: { 'vs': 'lib/monaco-editor/min/vs' } });
 require(['vs/editor/editor.main'], function () {
     monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
         noSemanticValidation: false,

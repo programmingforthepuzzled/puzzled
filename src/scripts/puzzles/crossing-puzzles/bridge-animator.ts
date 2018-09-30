@@ -123,7 +123,6 @@ export class BridgeAnimator implements Animator {
 		this.updateTorch(state)
 
 		if (sessionStorage.getItem('accessibility') === 'yes') {
-			//This code is
 			if (i === states.length - 1) {
 				let description: string[] = []
 
