@@ -88,12 +88,13 @@ class BridgeSetup extends StandardSetup {
 
     constructor(specificSetupCode: Function, assetsDir: string, tutorialData: TutorialData, initialCode: string, typeDefs: string) {
         super(assetsDir, specificSetupCode, tutorialData, initialCode)
+        //Declaring as const crossBridge = function instead of "declare function" prevents users from redefining the functions
         this.typeDefs = stripIndent`
         declare class Adventurer {
             private constructor()
          }
-        declare function crossBridge(...adventurers: Adventurer[]): void
-        declare function giveTorch(adventurer: Adventurer): void
+        declare const crossBridge = function(...adventurers: Adventurer[]): void
+        declare const giveTorch = function(adventurer: Adventurer): void
         ` + "\n" + typeDefs
         this.tutorialData.images = this.tutorialData.images.map(image => this.assetsDir + image)
     }
